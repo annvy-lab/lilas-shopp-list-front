@@ -1,19 +1,35 @@
-import { Button } from "@/app/_components/ui/button"
+import { Search } from "lucide-react";
+
+import AddProductButton from "./_components/common/add-product-button";
+import Footer from "./_components/common/footer";
+import Navbar from "./_components/common/navbar";
+import ProductItem from "./_components/common/product-item";
+import Title from "./_components/common/title";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "./_components/ui/input-group";
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <div className="min-h-svh flex-1 p-6">
+      <Navbar />
+      <Title />
+      <div className="flex flex-col gap-2">
+        <h3 className="font-semibold text-secondary-foreground">LISTA</h3>
+        <div className="mb-2 flex items-center justify-between gap-4">
+          <InputGroup className="rounded-lg">
+            <InputGroupInput placeholder="Buscar..." />
+            <InputGroupAddon>
+              <Search />
+            </InputGroupAddon>
+          </InputGroup>
+          <AddProductButton />
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+        <ProductItem />
+        <Footer />
       </div>
     </div>
-  )
+  );
 }

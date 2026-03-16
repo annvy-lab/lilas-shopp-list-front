@@ -1,10 +1,10 @@
 import "./globals.css";
 
-import { Geist_Mono, Raleway } from "next/font/google";
+import { Geist_Mono, Nunito } from "next/font/google";
 
 import { cn } from "@/app/_lib/utils";
 
-const raleway = Raleway({ subsets: ["latin"], variable: "--font-sans" });
+const nunito = Nunito({ subsets: ["latin"], variable: "--font-sans" });
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -24,8 +24,9 @@ export default function RootLayout({
         "antialiased",
         fontMono.variable,
         "font-sans",
-        raleway.variable,
+        nunito.variable,
         "dark",
+        "font-light",
       )}
     >
       <body>{children}</body>
