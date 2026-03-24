@@ -1,8 +1,16 @@
-import { CakeSlice, EllipsisVertical } from "lucide-react";
+import { CakeSlice, EllipsisVertical, Settings2, Trash } from "lucide-react";
 
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const ProductItem = () => {
   return (
@@ -33,9 +41,28 @@ const ProductItem = () => {
               qtd: <span className="text-foreground">1</span>
             </p>
           </div>
-          <Button variant={"ghost"} className="h-fit w-fit p-1">
-            <EllipsisVertical />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button variant={"ghost"} className="h-fit w-fit p-1">
+                  <EllipsisVertical />
+                </Button>
+              }
+            />
+            <DropdownMenuContent>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel className="text-secondary-foreground">
+                  Opções
+                </DropdownMenuLabel>
+                <DropdownMenuItem>
+                  <Settings2 /> Editar
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Trash className="mb-0.5" /> Excluir
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </CardContent>
     </Card>

@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 const Title = () => {
   return (
-    <div className="start-center mb-6 flex flex-col gap-0">
+    <div className="start-center mb-6 flex flex-col gap-0 px-6">
       <h1 className="text-xl">
         Olá, <span className="font-medium">Usuário!</span>
       </h1>
