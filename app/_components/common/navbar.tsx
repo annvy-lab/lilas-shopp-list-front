@@ -13,7 +13,7 @@ const Navbar = () => {
   const { user } = useUser();
 
   const handleLogout = async () => {
-    await signOut();
+    await signOut({ redirectUrl: "/sign-in" });
   };
 
   return (

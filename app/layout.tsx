@@ -31,7 +31,13 @@ export default function RootLayout({
       )}
     >
       <body>
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider
+          signInUrl="/sign-in"
+          signUpUrl="/sign-up"
+          afterSignOutUrl="/sign-in"
+        >
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );
