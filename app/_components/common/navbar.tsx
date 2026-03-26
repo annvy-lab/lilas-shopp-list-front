@@ -26,7 +26,6 @@ const Navbar = () => {
 
         <SheetContent className="flex h-full flex-col p-6">
           <div>
-            npm audit
             <SheetTitle>Menu</SheetTitle>
             <div className="mt-6 flex flex-col items-center justify-center space-y-2 pb-4">
               <Avatar className="h-16 w-16">
