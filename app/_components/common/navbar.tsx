@@ -1,9 +1,11 @@
-import { Cat, Heart, LogOut, Menu } from "lucide-react";
+import { Cat, Heart, Menu } from "lucide-react";
 import Image from "next/image";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import LogoutButton from "./logout-button";
+
 
 const Navbar = () => {
   return (
@@ -65,10 +67,7 @@ const Navbar = () => {
           </div>
 
           <div className="mt-auto pt-6">
-            <Button className="w-full">
-              <LogOut />
-              Logout
-            </Button>
+            <LogoutButton />
           </div>
         </SheetContent>
       </Sheet>
