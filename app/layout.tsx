@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import { ClerkProvider } from "@clerk/nextjs";
 import { Geist_Mono, Nunito } from "next/font/google";
 
 import { cn } from "@/app/_lib/utils";
@@ -29,7 +30,9 @@ export default function RootLayout({
         "font-light",
       )}
     >
-      <body>{children}</body>
+      <body>
+        <ClerkProvider>{children}</ClerkProvider>
+      </body>
     </html>
   );
 }
