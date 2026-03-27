@@ -1,3 +1,6 @@
+"use client";
+
+import { useClerk, useUser } from "@clerk/nextjs";
 import { Cat, Heart, LogOut, Menu } from "lucide-react";
 import Image from "next/image";
 
@@ -6,6 +9,13 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 
 const Navbar = () => {
+  const { signOut } = useClerk();
+  const { user } = useUser();
+
+  const handleLogout = async () => {
+    await signOut({ redirectUrl: "/sign-in" });
+  };
+
   return (
     <div className="mb-6 flex w-full items-center justify-between gap-2 p-6 pb-0">
       <Image
@@ -29,19 +39,20 @@ const Navbar = () => {
             <SheetTitle>Menu</SheetTitle>
             <div className="mt-6 flex flex-col items-center justify-center space-y-2 pb-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src="" />
+                <AvatarImage src={user?.imageUrl} />
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>
 
               <div className="flex flex-col items-center justify-center">
                 <h3 className="line-clamp-1 text-xl font-bold text-primary">
-                  User Name
+                  {user?.fullName}
                 </h3>
                 <p className="mt-[-0.1rem] line-clamp-1 text-sm font-light text-foreground/80">
-                  username@gmail.com
+                  {user?.emailAddresses?.[0]?.emailAddress}
                 </p>
               </div>
             </div>
+
             <div className="mt-6 border-y py-4">
               <div className="flex items-center justify-center gap-2">
                 <Cat className="h-4 w-4 text-primary" />
@@ -65,7 +76,7 @@ const Navbar = () => {
           </div>
 
           <div className="mt-auto pt-6">
-            <Button className="w-full">
+            <Button className="w-full" onClick={handleLogout}>
               <LogOut />
               Logout
             </Button>
