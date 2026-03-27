@@ -1,9 +1,9 @@
 "use client";
 
-import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { PackageSearch, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
+import type { ShoppingList } from "./_types/shopping-list";
 import Footer from "./_components/common/footer";
 import Navbar from "./_components/common/navbar";
 import ProductItem from "./_components/common/product-item";
@@ -14,29 +14,27 @@ import {
   InputGroupInput,
 } from "./_components/ui/input-group";
 import { ScrollArea } from "./_components/ui/scroll-area";
-import { useAuth } from "./_hooks/use-auth";
-
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `item.${a.length - i}`,
-);
+import { getShoppingList } from "./_actions/shopping-list";
+import { Spinner } from "./_components/ui/spinner";
 
 export default function Page() {
-  const router = useRouter();
-  const { isAuthenticated, isLoading } = useAuth();
+  const [shoppingList, setShoppingList] = useState<ShoppingList | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.replace("/sign-in");
-    }
-  }, [isAuthenticated, isLoading, router]);
+    const fetchShoppingList = async () => {
+      try {
+        const data = await getShoppingList();
+        setShoppingList(data);
+      } catch (error) {
+        console.error("Erro ao buscar lista:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (!isAuthenticated) {
-    return null;
-  }
+    fetchShoppingList();
+  }, []);
 
   return (
     <div className="flex h-svh w-full flex-col overflow-hidden bg-background">
@@ -53,22 +51,40 @@ export default function Page() {
               <Search />
             </InputGroupAddon>
           </InputGroup>
-
-          {/* <AddProductButton /> */}
         </div>
       </div>
 
       <div className="mb-2 min-h-0 flex-1 px-3 pb-0">
         <ScrollArea className="h-full w-full px-2.5">
           <div className="space-y-2 p-1">
-            {tags.map((tag) => (
-              <ProductItem key={tag} />
-            ))}
+            {isLoading ? (
+              <div className="flex w-full items-center justify-center p-4 pt-10">
+                <Spinner className="size-8 text-primary" />
+              </div>
+            ) : shoppingList?.items?.length ? (
+              shoppingList.items.map((item) => (
+                <ProductItem key={item.id} item={item} />
+              ))
+            ) : (
+              <div className="flex w-full flex-col items-center justify-center gap-2 p-4 pt-10">
+                <PackageSearch
+                  size={60}
+                  strokeWidth={0.9}
+                  className="text-secondary-foreground/50"
+                />
+                <p className="text-sm text-secondary-foreground">
+                  Sem itens na lista
+                </p>
+              </div>
+            )}
           </div>
         </ScrollArea>
       </div>
 
-      <Footer />
+      <Footer
+        qtyItems={shoppingList?.totalItens ?? 0}
+        totalAmount={shoppingList?.totalEstimado ?? 0}
+      />
     </div>
   );
 }

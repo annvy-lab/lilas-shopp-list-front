@@ -2,24 +2,29 @@
 
 import { Cat, Heart, LogOut, Menu } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
+import { useAuth } from "@/app/_hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
-import { useAuth } from "@/app/_hooks/use-auth";
 
 const Navbar = () => {
-  const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
 
-  const handleLogout = async () => {};
+  const handleLogout = async () => {
+    signOut();
+    router.replace("/sign-in");
+  };
 
   return (
     <div className="mb-6 flex w-full items-center justify-between gap-2 p-6 pb-0">
       <Image
         src="/shopp-list-logo.svg"
         alt="logo app"
-        height={108}
-        width={200}
+        height={80}
+        width={180}
       />
 
       <Sheet>
@@ -36,7 +41,7 @@ const Navbar = () => {
             <SheetTitle>Menu</SheetTitle>
             <div className="mt-6 flex flex-col items-center justify-center space-y-2 pb-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src={user?.photo ?? ""} />
+                <AvatarImage src={user?.photo || undefined} />
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>
 
