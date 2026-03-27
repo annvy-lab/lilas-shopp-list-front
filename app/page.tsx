@@ -1,6 +1,9 @@
-import { Search } from "lucide-react";
+"use client";
 
-import AddProductButton from "./_components/common/add-product-button";
+import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 import Footer from "./_components/common/footer";
 import Navbar from "./_components/common/navbar";
 import ProductItem from "./_components/common/product-item";
@@ -11,12 +14,30 @@ import {
   InputGroupInput,
 } from "./_components/ui/input-group";
 import { ScrollArea } from "./_components/ui/scroll-area";
+import { useAuth } from "./_hooks/use-auth";
 
 const tags = Array.from({ length: 50 }).map(
   (_, i, a) => `item.${a.length - i}`,
 );
 
 export default function Page() {
+  const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.replace("/sign-in");
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  if (isLoading) {
+    return null;
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <div className="flex h-svh w-full flex-col overflow-hidden bg-background">
       <Navbar />
@@ -33,7 +54,7 @@ export default function Page() {
             </InputGroupAddon>
           </InputGroup>
 
-          <AddProductButton />
+          {/* <AddProductButton /> */}
         </div>
       </div>
 

@@ -1,9 +1,10 @@
 import "./globals.css";
 
-import { ClerkProvider } from "@clerk/nextjs";
 import { Geist_Mono, Nunito } from "next/font/google";
 
 import { cn } from "@/app/_lib/utils";
+import { AppGoogleProvider } from "./_components/providers/google-provider";
+import { AuthProvider } from "./_context/auth-context";
 
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -31,13 +32,9 @@ export default function RootLayout({
       )}
     >
       <body>
-        <ClerkProvider
-          signInUrl="/sign-in"
-          signUpUrl="/sign-up"
-          afterSignOutUrl="/sign-in"
-        >
-          {children}
-        </ClerkProvider>
+        <AppGoogleProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </AppGoogleProvider>
       </body>
     </html>
   );

@@ -1,20 +1,17 @@
 "use client";
 
-import { useClerk, useUser } from "@clerk/nextjs";
 import { Cat, Heart, LogOut, Menu } from "lucide-react";
 import Image from "next/image";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { useAuth } from "@/app/_hooks/use-auth";
 
 const Navbar = () => {
-  const { signOut } = useClerk();
-  const { user } = useUser();
+  const { user, isAuthenticated } = useAuth();
 
-  const handleLogout = async () => {
-    await signOut({ redirectUrl: "/sign-in" });
-  };
+  const handleLogout = async () => {};
 
   return (
     <div className="mb-6 flex w-full items-center justify-between gap-2 p-6 pb-0">
@@ -39,16 +36,16 @@ const Navbar = () => {
             <SheetTitle>Menu</SheetTitle>
             <div className="mt-6 flex flex-col items-center justify-center space-y-2 pb-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src={user?.imageUrl} />
+                <AvatarImage src={user?.photo ?? ""} />
                 <AvatarFallback>UN</AvatarFallback>
               </Avatar>
 
               <div className="flex flex-col items-center justify-center">
                 <h3 className="line-clamp-1 text-xl font-bold text-primary">
-                  {user?.fullName}
+                  {user?.firstName}
                 </h3>
                 <p className="mt-[-0.1rem] line-clamp-1 text-sm font-light text-foreground/80">
-                  {user?.emailAddresses?.[0]?.emailAddress}
+                  {user?.email}
                 </p>
               </div>
             </div>
